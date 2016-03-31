@@ -6,10 +6,12 @@ from random import shuffle
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 from nltk.data import load
+from pkg_resources import resource_filename
 
 
 class TextUtility(object):
-    negators = [line.strip() for line in file('../data/negator.txt','r')]
+    negator_file = file(resource_filename(__name__, 'data/negator.txt'), 'r')
+    negators = [line.strip() for line in negator_file]
     tokenizer = load('tokenizers/punkt/english.pickle')
 
     @staticmethod
@@ -47,7 +49,7 @@ class TextUtility(object):
                 sentences.append(TextUtility.text_to_wordlist(raw_sentence, remove_stopwords))
 
         return sentences
-    
+
 
     @staticmethod
     def split_train_test(df, test_portion=0.3):
@@ -61,9 +63,9 @@ class TextUtility(object):
         # Get training and test sets
         train = df.ix[l[:trainLen]]
         test = df.ix[l[trainLen:]]
- 
+
         return train, test
-    
+
 
     @staticmethod
     def split_train_dev_test(df, dev_portion=0.2, test_portion=0.2):
@@ -79,5 +81,5 @@ class TextUtility(object):
         train = df.ix[l[:trainLen]]
         dev = df.ix[l[trainLen:traindevLen]]
         test = df.ix[l[traindevLen:]]
- 
+
         return train, dev, test

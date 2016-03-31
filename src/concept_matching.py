@@ -11,7 +11,7 @@ def run_cm(train, test, f_lex):
     except:
         print "Error in loading ADR lexicon"
         exit(1)
-        
+
     y_pred = []
 
     for _, row in test.iterrows():
@@ -22,7 +22,7 @@ def run_cm(train, test, f_lex):
                 is_adr = True
                 break
         y_pred.append(int(is_adr))
-    
+
     return y_pred
 
-    
+
